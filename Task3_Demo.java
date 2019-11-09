@@ -28,7 +28,7 @@ public class Task3_Demo {
 
             }
         }
-        char succ = path_finder(maze , startPos);
+        char succ = shortest_way(maze , startPos);
 
         for(int i =0 ; i< maze.length; i++){
             for(int j = 0 ; j <maze[i].length; j++){
@@ -42,7 +42,7 @@ public class Task3_Demo {
 
         return succ;
     }
-    public char path_finder(int[][] maze , Pair pos){ //pos = starting position
+    public char shortest_way(int[][] maze , Pair pos){ //pos = starting position
         if(result[pos.x][pos.y] == 'E') {
             return 'X';    //Found the end.
         }
@@ -52,7 +52,7 @@ public class Task3_Demo {
             result[pos.x][pos.y] = 'V';	//Visited
 
             int offset = pos.x + 1;
-            if(offset >= maze.length){ //если он каким то образом выходит за грань ты выводит на  начало рекурсивно
+            if(offset >= maze.length){
                 offset = 0;
                 System.out.println("Exception handled");
             }
@@ -61,7 +61,7 @@ public class Task3_Demo {
             if(south == 0 || south == 'E')
             {
                 //Go south
-                c = path_finder(maze, new Pair(offset, pos.y));
+                c = shortest_way(maze, new Pair(offset, pos.y));
                 result[offset][pos.y] = c;
                 countX++;
                 if(c == 'X') return 'X'; //base-case
@@ -77,7 +77,7 @@ public class Task3_Demo {
             if(east == 0 || east == 'E')
             {
                 //Go east
-                c = path_finder(maze, new Pair(pos.x , offset));
+                c = shortest_way(maze, new Pair(pos.x , offset));
                 result[pos.x][offset] = c;
                 countX++;
                 if(c == 'X') return 'X';
@@ -85,7 +85,7 @@ public class Task3_Demo {
 
             offset = pos.y - 1;
             if(offset < 0){
-                offset = maze[0].length - 1; // а здесь он будет выводить вконец рекурсивно по выход за предел
+                offset = maze[0].length - 1;
                 System.out.println("Exception handled");
             }
 
@@ -93,7 +93,7 @@ public class Task3_Demo {
             if(west == 0 || west == 'E')
             {
                 //Go west
-                c = path_finder(maze, new Pair(pos.x , offset));
+                c = shortest_way(maze, new Pair(pos.x , offset));
                 result[pos.x][offset] = c;
                 countX++;
                 if(c == 'X') return 'X';
@@ -110,7 +110,7 @@ public class Task3_Demo {
             {
                 //Go north
 
-                c = path_finder(maze, new Pair(offset, pos.y));
+                c = shortest_way(maze, new Pair(offset, pos.y));
                 result[offset][pos.y] = c;
                 countX++;
                 if(c == 'X')
@@ -142,18 +142,6 @@ public class Task3_Demo {
                 {-1,0,0,0,1,1},
                 {1,0,1,0,0,1},
                 {1,1,1,1,1,1} };
-       /* int[][] bfs  = {{1,1,1,1,0,1},
-                {1,0,0,1,2,1},
-                {1,0,1,0,0,1} ,
-                {1,1,1,0,1,1},
-                {1,1,1,0,0,1},
-                {1,-1,0,0,1,1} };
-*/
-       /* int[][] bfs  = {{1, 0, 2, 0, 1},
-                {1,1,1,0,0},
-                {1,1,1,1,0},
-                {1,-1,0,0,0},
-                {1,1,1,1,1}};*/
         int sX = 0;
         int sY = 0;
         int eX = 0;
